@@ -1,6 +1,7 @@
-/**
- * Created by user on 4/11/2017.
- */
+/****************************************
+ * Created by Drake Nelson on 4/11/2017.*
+ * StopLight Simulation                 *
+ ****************************************/
 public class Main {
     public static void main(String[] args) {
         
