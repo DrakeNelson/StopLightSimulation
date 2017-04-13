@@ -34,4 +34,11 @@ public class Car {
         }
 
     }
+
+    public Road getRoad() {
+        return road;
+    }
+    public Path getPath() {
+        return turnIntent;
+    }
 }

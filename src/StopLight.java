@@ -3,32 +3,39 @@
   The stoplight simulation stoplight object is the object being simulated
  */
 
-import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
 class StopLight {
     //Stoplight has a clock to keep track of runtime in seconds
-    private int clock;
+    private static int clock;
+
+    public static int getClock() {
+        return clock;
+    }
+
     //end time for the simulation
     private int endTimeClock;
     private Stats stats;
     //Queue for the cars on the eastwest road
-    private Queue<Car> eastCars, northCars, westCars;
+    private static Queue<Car> eastCars, northCars, westCars;
+
+    static void addCar(Car car) {
+        if (car.getRoad() == Road.EASTWEST) {
+            eastCars.add(car);
+        } else if (car.getPath() == Path.NORTH_NORTH) {
+            northCars.add(car);
+        } else {
+            westCars.add(car);
+        }
+    }
 
     //PriorityQueue:stopLightEvents is a queue that holds the events in the order they will happen based on the clock time
-    private PriorityQueue<StopLightEvent> stopLightEvents = new PriorityQueue<>(10, new StopLightEventComparator());
-    //comparator:events will be added to the queue based on the time they are to happen
-    private class StopLightEventComparator implements Comparator<StopLightEvent> {
-        @Override
-        public int compare(StopLightEvent x, StopLightEvent y) {
-            if (x.time > y.time) {
-                return -1;
-            } else {
-                return 1;
-            }
-        }
+    private static PriorityQueue<StopLightEvent> stopLightEvents = new PriorityQueue<>(10, new StopLightEventComparator());
+
+    static void addEvent(StopLightEvent e) {
+        stopLightEvents.add(e);
     }
 
     //constructor for the stoplight
