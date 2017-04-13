@@ -3,5 +3,5 @@
  */
 
 public interface IStopLightEvent {
-    public void execute();
+    void execute();
 }

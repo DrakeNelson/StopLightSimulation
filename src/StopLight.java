@@ -11,27 +11,33 @@ class StopLight {
     //Stoplight has a clock to keep track of runtime in seconds
     private static int clock;
 
-    public static int getClock() {
+    static int getClock() {
         return clock;
     }
 
-    public static void setClock(int c) {
+    static void setClock(int c) {
         clock = c;
     }
 
     //end time for the simulation
     private int endTimeClock;
-    private Stats stats;
+    //variables used for statistics
+    static double totalNSCars;
+    static double totalEWCars;
+    static double totalNSWaitTime;
+    static double totalEWWaitTime;
+    private double avgWaitTimePerCarEW;
+    private double avgWaitTimePerCarNS;
 
-    public static Queue<Car> getEastCars() {
+    static Queue<Car> getEastCars() {
         return eastCars;
     }
 
-    public static Queue<Car> getNorthCars() {
+    static Queue<Car> getNorthCars() {
         return northCars;
     }
 
-    public static Queue<Car> getWestCars() {
+    static Queue<Car> getWestCars() {
         return westCars;
     }
 
@@ -65,10 +71,18 @@ class StopLight {
         eastCars = new LinkedList<>();
         northCars = new LinkedList<>();
         westCars = new LinkedList<>();
-        stats = new Stats();
         clock = 0;
         stopLightStatus = StopLightStatus.EAST_GREEN;
+        totalNSCars = 0;
+        totalEWCars = 0;
+        totalNSWaitTime = 0;
+        totalEWWaitTime = 0;
+        avgWaitTimePerCarEW = 0;
+        avgWaitTimePerCarNS = 0;
     }
+
+    //boolean variables to check if queues can deque
+    static boolean canMakeLeftTurn = false;
 
     void simulation() {
         stopLightEvents.add(new ArrivalEvent(0, Road.EAST_WEST));
@@ -78,29 +92,17 @@ class StopLight {
             StopLightEvent event = stopLightEvents.poll();
             event.execute();
         }
-        stats.setAverages();
+        adjust();
+    }
+
+    private void adjust() {
+        avgWaitTimePerCarEW = totalEWWaitTime / totalEWCars;
+        avgWaitTimePerCarNS = totalNSWaitTime / totalNSCars;
     }
 
     void printStats() {
-        stats.print();
+        System.out.println("The average wait time of a car in the North/South Road: " + (int) avgWaitTimePerCarNS + " seconds");
+        System.out.println("The average wait time of a car in the East/West Road: " + (int) avgWaitTimePerCarEW + " seconds");
     }
 
-
-    //another inner class holds the statistics
-    private class Stats {
-        //todo constructor for the statistics
-        private Stats() {
-
-        }
-
-        //todo this
-        private void print() {
-            System.out.print("x");
-        }
-
-        //todo this
-        public void setAverages() {
-
-        }
-    }
 }
