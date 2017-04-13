@@ -15,7 +15,7 @@ public class Car {
 
         //here we generate which direction the car will turn
         int turnGenerator = (int) (Math.random()) * 10;
-        if (road == Road.EASTWEST) {
+        if (road == Road.EAST_WEST) {
             if (turnGenerator > 6) {
                 turnIntent = Path.EAST_SOUTH;
                 clearTime = (int) (5 * Math.log(1 - Math.random()) / -1.0);
@@ -23,7 +23,7 @@ public class Car {
                 turnIntent = Path.EAST_NORTH;
                 clearTime = (int) (8 * Math.log(1 - Math.random()) / -1.0);
             }
-        } else if (road == Road.NORTHSOUTH) {
+        } else if (road == Road.NORTH_SOUTH) {
             if (turnGenerator > 7) {
                 turnIntent = Path.NORTH_NORTH;
                 clearTime = (int) (4 * Math.log(1 - Math.random()) / -1.0);

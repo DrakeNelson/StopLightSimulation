@@ -5,9 +5,9 @@ public class StopLightEventComparator implements Comparator<StopLightEvent> {
     @Override
     public int compare(StopLightEvent x, StopLightEvent y) {
         if (x.time > y.time) {
-            return -1;
-        } else {
             return 1;
+        } else {
+            return -1;
         }
     }
 }

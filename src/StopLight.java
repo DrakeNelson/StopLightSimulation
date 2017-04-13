@@ -15,14 +15,31 @@ class StopLight {
         return clock;
     }
 
+    public static void setClock(int c) {
+        clock = c;
+    }
+
     //end time for the simulation
     private int endTimeClock;
     private Stats stats;
+
+    public static Queue<Car> getEastCars() {
+        return eastCars;
+    }
+
+    public static Queue<Car> getNorthCars() {
+        return northCars;
+    }
+
+    public static Queue<Car> getWestCars() {
+        return westCars;
+    }
+
     //Queue for the cars on the eastwest road
     private static Queue<Car> eastCars, northCars, westCars;
 
     static void addCar(Car car) {
-        if (car.getRoad() == Road.EASTWEST) {
+        if (car.getRoad() == Road.EAST_WEST) {
             eastCars.add(car);
         } else if (car.getPath() == Path.NORTH_NORTH) {
             northCars.add(car);
@@ -38,6 +55,9 @@ class StopLight {
         stopLightEvents.add(e);
     }
 
+    //this variable holds the current value of the stoplight which controls who has green
+    static StopLightStatus stopLightStatus;
+
     //constructor for the stoplight
     StopLight() {
         //1000 hours * 60 minutes * 60 seconds runs the simulation for total time in seconds
@@ -47,11 +67,13 @@ class StopLight {
         westCars = new LinkedList<>();
         stats = new Stats();
         clock = 0;
+        stopLightStatus = StopLightStatus.EAST_GREEN;
     }
 
     void simulation() {
-        stopLightEvents.add(new ArrivalEvent(0, Road.EASTWEST));
-        stopLightEvents.add(new ArrivalEvent(0, Road.NORTHSOUTH));
+        stopLightEvents.add(new ArrivalEvent(0, Road.EAST_WEST));
+        stopLightEvents.add(new ArrivalEvent(0, Road.NORTH_SOUTH));
+        stopLightEvents.add(new StopLightChangeEvent(0, StopLightStatus.EAST_GREEN));
         while (clock < endTimeClock) {
             StopLightEvent event = stopLightEvents.poll();
             event.execute();
