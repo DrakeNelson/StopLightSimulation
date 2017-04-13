@@ -7,5 +7,6 @@ public class Main {
         StopLight stopLight = new StopLight();
         stopLight.simulation();
         stopLight.printStats();
+
     }
 }
