@@ -5,7 +5,7 @@ public class StopLightChangeEvent extends StopLightEvent {
     StopLightChangeEvent(int time, StopLightStatus status) {
         this.time = time;
         this.status = status;
-        eventType = StopLightEventType.STOPLIGHT_CHANGE;
+        //eventType = StopLightEventType.STOPLIGHT_CHANGE;
     }
 
     @Override
@@ -35,6 +35,5 @@ public class StopLightChangeEvent extends StopLightEvent {
                 break;
 
         }
-        StopLight.addEvent(new DepartureEvent(time));
     }
 }

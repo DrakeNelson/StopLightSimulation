@@ -4,20 +4,15 @@ public class DepartureEvent extends StopLightEvent {
     private Path path;
     private Road road;
 
-     DepartureEvent(int time) {
-        this.time = time;
-        eventType = StopLightEventType.DEPARTURE;
-    }
-
      DepartureEvent(int time, Road road) {
         this.time = time;
-        eventType = StopLightEventType.DEPARTURE;
+        //eventType = StopLightEventType.DEPARTURE;
         this.road = road;
     }
 
      DepartureEvent(int time, Road road, Path path) {
         this.time = time;
-        eventType = StopLightEventType.DEPARTURE;
+        //eventType = StopLightEventType.DEPARTURE;
         this.road = road;
         this.path = path;
     }
@@ -32,6 +27,7 @@ public class DepartureEvent extends StopLightEvent {
     }
     @Override
     public void execute() {
+        updateAverageInLine(road);
         Car car;
         //execute the departure if the light on the east/west road is green
         if (road == Road.EAST_WEST) {

@@ -20,7 +20,7 @@ class StopLight {
     }
 
     //end time for the simulation
-    private int endTimeClock;
+    private double endTimeClock;
     //variables used for statistics
     static double totalNSCars;
     static double totalEWCars;
@@ -28,6 +28,14 @@ class StopLight {
     static double totalEWWaitTime;
     private double avgWaitTimePerCarEW;
     private double avgWaitTimePerCarNS;
+    //to get the avg number of cars in line
+    //hold times that last event happened to update on each event
+    static double lastNSEventTime = 0;
+    static double lastEWEventTime = 0;
+    //hold the sum of the deltaTimes * the numbers of people during that time
+    static double deltaTimeSumNS = 0;
+    static double deltaTimeSumEW = 0;
+
 
     static Queue<Car> getEastCars() {
         return eastCars;
@@ -95,14 +103,21 @@ class StopLight {
         adjust();
     }
 
+    private int avgCarsInLineNS = 0;
+    private int avgCarsInLineEW = 0;
+
     private void adjust() {
         avgWaitTimePerCarEW = totalEWWaitTime / totalEWCars;
         avgWaitTimePerCarNS = totalNSWaitTime / totalNSCars;
+        avgCarsInLineNS = (int) (deltaTimeSumNS / endTimeClock);
+        avgCarsInLineEW = (int) (deltaTimeSumEW / endTimeClock);
     }
 
     void printStats() {
         System.out.println("The average wait time of a car in the North/South Road: " + (int) avgWaitTimePerCarNS + " seconds");
         System.out.println("The average wait time of a car in the East/West Road: " + (int) avgWaitTimePerCarEW + " seconds");
+        System.out.println("The average # of Cars in the North/South Road: " + avgCarsInLineNS);
+        System.out.println("The average # of Cars in the East/West Road: " + avgCarsInLineEW);
     }
 
 }
